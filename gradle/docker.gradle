@@ -3,7 +3,12 @@ jib {
         image = "adoptopenjdk:11-jre-hotspot"
     }
     to {
-        image = "rfbloyalty:latest"
+        tags = ['latest',"${project.version}".toString()]
+        image = "alexvak/rfbloyalty"
+        auth {
+            username = 'alexvak'
+            password = System.getenv("DOCKER_HUB_PWD")
+        }
     }
     container {
         entrypoint = ["bash", "-c", "/entrypoint.sh"]
@@ -19,4 +24,3 @@ jib {
       permissions = ["/entrypoint.sh": "755"]
     }
 }
-

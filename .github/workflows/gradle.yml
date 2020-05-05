@@ -24,3 +24,7 @@ jobs:
       run: chmod +x gradlew
     - name: Testing
       run: ./gradlew test integrationTest jacocoTestReport
+    - name: Build and Push Docker Image
+      env:
+        DOCKER_HUB_PWD: ${{ secrets.DOCKER_HUB_PWD }}
+      run: ./gradlew jib
