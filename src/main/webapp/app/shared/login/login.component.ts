@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -20,6 +20,7 @@ export class LoginModalComponent implements AfterViewInit {
     password: [''],
     rememberMe: [false]
   });
+  authenticationErrorMessage?: string;
 
   constructor(private loginService: LoginService, private router: Router, public activeModal: NgbActiveModal, private fb: FormBuilder) {}
 
@@ -57,7 +58,10 @@ export class LoginModalComponent implements AfterViewInit {
             this.router.navigate(['']);
           }
         },
-        () => (this.authenticationError = true)
+        response => {
+          this.authenticationError = true;
+          this.authenticationErrorMessage = response.error.message;
+        }
       );
   }
 
